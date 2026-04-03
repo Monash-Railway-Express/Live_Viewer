@@ -1,0 +1,87 @@
+{
+	"emcy_message": {
+		"1": "Object dictionary not found after receiving SDO",
+		"2": "After SDO read request, Object dictionary on receiving node is not configured correctly.",
+		"3": "Unexpected error :(",
+		"4": "SDO write is not the same size as the recieving nodes object dictionary",
+		"5": "Failed to send SDO response",
+		"6": "SDO being transmitted is not the right size",
+		"7": "Failed to send sdo request",
+		"8": "SDO response not received",
+		"9": "SDO Abort received",
+		"10": "Unexpected SDO CMD received in response",
+		"257": "Heartbeat was not recieved in time (Node id will tell you what node failed)",
+		"513": "NMT command failure (Node id will tell you which was target node)",
+		"769": "Max Minor emergency count reached",
+		"1025": "TPDO read mapping failed",
+		"1026": "RPDO write mapping failed",
+		"1027": "TPDO transmission failed",
+		"1280": "Audio system SD card fault",
+		"1285": "Smoke Detected in the Locomotive",
+		"1286": "Temperature inside Locomotive is Too High"
+	},
+
+	"object_dictionary": {
+		"12306": {
+			"1": "serviceBrake",
+			"0": "regenBrake"
+		},
+		"24831": {
+			"0": "desiredSpeed"
+		},
+		"24682": {
+			"0": "targetSpeed"
+		},
+		"24684": {
+			"0": "trueSpeed"
+		},
+		"24672": {
+			"0": "directionMode"
+		},
+		"24673": {
+			"0": "conditionMode"
+		},
+		"24677": {
+			"0": "horn"
+		},
+		"8192": {
+			"0": "Current",
+			"1": "Voltage",
+			"2": "State of charge",
+			"3": "Power",
+			"4": "Recovered energy"
+		}
+	},
+
+	"object_meaning": {
+		"24672": {
+			"0": {
+				"0": "reverse",
+				"1": "neutral",
+				"2": "forward"
+			}
+		},
+		"24677": {
+			"0": {
+				"0": "released",
+				"1": "pressed"
+			}
+		}
+	},
+
+	"pdo_entries": {
+		"391": [["8192", "0", "32", true], ["8192", "1", "16", true], ["8192", "2", "16", true]]
+	},
+
+	"node_name": {
+		"1": "Motor Controller",
+		"2": "Brakes",
+		"3": "Driver Control",
+		"4": "Lights",
+		"5": "Audio",
+		"6": "Sensor System",
+		"7": "Battery",
+		"8": "CAN Logger",
+		"9": "Driver Screen"
+	}
+}

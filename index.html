@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Live Feed - MREx CAN Logger</title>
+	<link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+</head>
+<body>
+<fieldset>
+    <legend>Server Status</legend>
+    <div>
+        <span id="status"></span>
+    </div>
+</fieldset>
+<fieldset>
+    <legend>Request</legend>
+    <form id="form">
+        <input type="submit" value="Send" id="sendMsg" disabled/>
+        <input type="text" size="80" id="msg"/>
+    </form>
+</fieldset>
+<fieldset>
+    <legend>Response</legend>
+    <div id="log"></div>
+</fieldset>
+</body>
+</html>

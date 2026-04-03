@@ -1,0 +1,21 @@
+{
+	"nmt_state": {
+		"1": "Operational",
+		"2": "Stopped",
+		"128": "Pre-operational",
+		"129": "Reset node",
+		"130": "Reset communication"
+	},
+
+	"emcy_priority": {
+		"0": "Major",
+		"1": "Minor"
+	},
+
+	"emcy_type": {
+		"0": "CAN MREx fault",
+		"1": "Motor fault",
+		"2": "Brake fault",
+		"3": "Battery fault"
+	}
+}
