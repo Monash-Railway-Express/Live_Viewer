@@ -1,17 +1,33 @@
+import { translate_row } from "./translate_row.js";
+
 window.onload = function () {
 	let conn;
 	const log = document.getElementById("log");
+	const rawLog = document.createElement("div");
+	const translatedLog = document.createElement("div");
 
-	function appendLog(item) {
+	log.replaceChildren(rawLog);
+
+	function appendLog(item, translatedItem) {
 		const doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
-		log.appendChild(item);
+		rawLog.appendChild(item);
+		translatedLog.appendChild(translatedItem);
 		if (doScroll) {
 			log.scrollTop = log.scrollHeight - log.clientHeight;
 		}
 	}
 
+	document.getElementById("translate").onclick = function (evt) {
+		if (log.firstChild === rawLog) {
+			log.replaceChildren(translatedLog);
+		} else {
+			log.replaceChildren(rawLog);
+		}
+	};
+
 	document.getElementById("clear").onclick = function (evt) {
-		log.textContent = "";
+		rawLog.innerText = "";
+		translatedLog.innerText = "";
 	};
 
 	if (window["WebSocket"]) {
@@ -31,8 +47,11 @@ window.onload = function () {
 				const messages = evt.data.split('\n');
 				for (let i = 0; i < messages.length; i++) {
 					const item = document.createElement("pre");
+					const translatedItem = document.createElement("pre");
 					item.innerText = messages[i];
-					appendLog(item);
+					const [timestamp, id, dlc, ...data] = messages[i].split(",");
+					translatedItem.innerText = JSON.stringify(translate_row(timestamp, id, parseInt(dlc), data));
+					appendLog(item, translatedItem);
 				}
 			};
 		};
