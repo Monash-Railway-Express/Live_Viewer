@@ -34,7 +34,7 @@ window.onload = function () {
 		document.getElementById("connect").onclick = function (evt) {
 			document.getElementById("connect").disabled = true;
 			document.getElementById("status").innerHTML = "Connecting...";
-			conn = new WebSocket("ws://10.0.0.1/ws");
+			conn = new WebSocket(document.getElementById("wsURL").value);
 
 			conn.onopen = function (evt) {
 				document.getElementById("status").innerHTML = "Connection opened.";
