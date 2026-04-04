@@ -1,11 +1,32 @@
-// Translated from original Python code written by Chiara Gillam for the MREx Dashboard
+/**
+ * @file decode_bytes.js
+ * @brief Provides a generic decoder for data bytes.
+ * 
+ * @details
+ * Translated from original Python code written by Chiara Gillam for the MREx Dashboard.
+ * Exposes a decoder function.
+ * 
+ * @author Chiara Gillam
+ * @author Nhan Nguyen
+ * 
+ * @date 04/04/2026
+ * 
+ * @version 1.0.0
+ * 
+ * @organisation MREX
+ * 
+ * @see https://github.com/Monash-Railway-Express/MREx_Dashboard/blob/main/utils/byte_decoder.py
+ */
 
 /**
- * Generic decoder for CAN data bytes.
- * @param {*} row data bytes as an array or object
- * @param {*} cols list of column names, e.g. ["Data4", "Data5", "Data6", "Data7"]
- * @param {*} signed true for 2's complement
- * @param {*} endian "little" or "big"
+ * @brief Decode a sequence of data bytes to the number represented.
+ * 
+ * @param row       Array or object of data bytes as strings or numbers.
+ * @param cols      List of column names, e.g. ["Data4", "Data5", "Data6", "Data7"].
+ * @param signed    true for 2's complement.
+ * @param endian    "little" or "big".
+ * 
+ * @return The raw integer represented as a number type.
  */
 function decode_bytes(row, cols, signed=false, endian="little") {
 	let raw;

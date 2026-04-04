@@ -1,3 +1,25 @@
+/**
+ * @file translate_row.js
+ * @brief Provides a translator for CAN MREx messages.
+ * 
+ * @details
+ * Implementation depends on the CAN MREx specification as of 17/02/2026
+ * https://github.com/Monash-Railway-Express/CAN_MREx
+ * First implemented in Python for the MREx Dashboard.
+ * Exposes a translator function.
+ * TODO: update against sheet and add test cases.
+ * 
+ * @author Nhan Nguyen
+ * 
+ * @date 04/04/2026
+ * 
+ * @version 1.0.0
+ * 
+ * @organisation MREX
+ * 
+ * @see https://github.com/Monash-Railway-Express/MREx_Dashboard/blob/main/utils/translator.py
+ */
+
 import sheet from "./sheet.json" with { type: "json" };
 import spec from "./spec.json" with { type: "json" };
 import { decode_bytes } from "./decode_bytes.js";
@@ -16,6 +38,16 @@ const {
 	emcy_type
 } = spec;
 
+/**
+ * @brief Translate a CAN MREx message represented as a log row to plain English.
+ * 
+ * @param timestamp	Timestamp
+ * @param id		COB-ID
+ * @param dlc_int	Data length code as a number
+ * @param data		Array of data bytes
+ * 
+ * @return An object with keys Timestamp, Function, Node ID, Node and Data.
+ */
 function translate_row(timestamp, id, dlc_int, data) {
 	const translated = {
 		"Timestamp": timestamp
