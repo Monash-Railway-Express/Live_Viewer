@@ -1,9 +1,9 @@
 window.onload = function () {
-	var conn;
-	var log = document.getElementById("log");
+	let conn;
+	const log = document.getElementById("log");
 
 	function appendLog(item) {
-		var doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
+		const doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
 		log.appendChild(item);
 		if (doScroll) {
 			log.scrollTop = log.scrollHeight - log.clientHeight;
@@ -28,16 +28,16 @@ window.onload = function () {
 				document.getElementById("status").innerHTML = "Connection closed or failed.";
 			};
 			conn.onmessage = function (evt) {
-				var messages = evt.data.split('\n');
-				for (var i = 0; i < messages.length; i++) {
-					var item = document.createElement("pre");
+				const messages = evt.data.split('\n');
+				for (let i = 0; i < messages.length; i++) {
+					const item = document.createElement("pre");
 					item.innerText = messages[i];
 					appendLog(item);
 				}
 			};
 		};
 	} else {
-		var item = document.createElement("pre");
+		const item = document.createElement("pre");
 		item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
 		appendLog(item);
 		document.getElementById("connect").disabled = true;
