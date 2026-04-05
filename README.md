@@ -8,15 +8,13 @@ Installable webpage to view CAN messages in the MREx Wallaby locomotive system i
 
 Go to https://monash-railway-express.github.io/Live_Viewer
 
-An install prompt should appear. It might take a minute and you might need to interact with the page before it appears.
+An install prompt should appear. It might take a minute and you might need to interact with the page before it appears. On mobile, you might need to visit the browser menu and find "Add to home screen" or similar.
 
 ### Usage
 
 #### 1. Permit insecure WebSocket connections
 
-If on desktop: follow the instructions at https://www.damirscorner.com/blog/posts/20210528-allowinginsecurewebsocketconnections.html
-
-If using Chrome on Android (similar steps might work for Chrome on other devices or possibly other mobile browsers): go to chrome://flags and search for Insecure origins treated as secure. Enter the URL of any insecure WebSocket domain that you wish to access such as ws://10.0.0.1 and select Enabled. Reload Chrome. [Screenshot](./insecure.png).
+If using a Chromium browser such as Chrome or Edge: go to chrome://flags and search for Insecure origins treated as secure. Enter the URL of any insecure WebSocket domain that you wish to access such as ws://10.0.0.1 and select Enabled. Reload your browser. [Screenshot](./insecure.png).
 
 #### 2. Open the viewer
 
