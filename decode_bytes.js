@@ -22,7 +22,7 @@
  * @brief Decode a sequence of data bytes to the number represented.
  * 
  * @param row       Array or object of data bytes as strings or numbers.
- * @param cols      List of column names, e.g. ["Data4", "Data5", "Data6", "Data7"].
+ * @param cols      Array of column names, e.g. ["Data4", "Data5", "Data6", "Data7"].
  * @param signed    true for 2's complement.
  * @param endian    "little" or "big".
  * 
@@ -34,8 +34,7 @@ function decode_bytes(row, cols, signed, endian) {
 	// Clean and convert each byte
     const bytes_list = [];
     for (const col of cols) {
-        const val = row[col].toString().replace("0x", "").trim();
-        bytes_list.push(parseInt(val));
+        bytes_list.push(parseInt(row[col]));
 	}
 
     // Combine into integer

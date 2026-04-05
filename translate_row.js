@@ -69,7 +69,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 		translated["Function"] = "EMCY";
 		translated["Node ID"] = id_int - 0x080;
         translated["Node"] = node_name[translated["Node ID"]];
-		translated["Data"] = `${emcy_priority[data_int[0]]} (${data_int[0]}) at node ${data_int[1]}: ${emcy_message[concatify(data_int.slice(2, 6).toReversed())]} (${data_int.slice(2, 6)})`;
+		translated["Data"] = `${emcy_priority[data_int[0]]} (${data_int[0]}) at node ${data_int[1]}: ${emcy_message[decode_bytes(data, [2, 3, 4, 5], false, "little")]} (${data_int.slice(2, 6)})`;
 	} else if (0x180 <= id_int && id_int <= 0x57F) {
 		translated["Function"] = "PDO";
         translated["Node ID"] = id_int % 0x80;
@@ -100,7 +100,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 		}
 	} else if (0x580 <= id_int && id_int <= 0x5FF) {
 		const command = data_int[0];
-		const index = concatify([data_int[2], data_int[1]]);
+		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
 		translated["Function"] = "SDO Tx";
         translated["Node ID"] = id_int - 0x580;
@@ -110,13 +110,13 @@ function translate_row(timestamp, id, dlc_int, data) {
 		if (command == 0x60) {
             translated["Data"] += "Write confirmation";
 		} else if ([0x4F, 0x4B, 0x43].includes(command)) {
-            translated["Data"] += hexify(concatify(data_int.slice(4, 8).toReversed())); // assuming little-endian
+            translated["Data"] += hexify(decode_bytes(data, [4, 5, 6, 7], false, "little")); // assuming little-endian
 		} else {
             translated["Data"] += `Unknown command ${data[0]} data ${data.slice(4, 8)}`;
 		}
 	} else if (0x600 <= id_int && id_int <= 0x67F) {
 		const command = data_int[0];
-		const index = concatify([data_int[2], data_int[1]]);
+		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
         translated["Function"] = "SDO Rx";
         translated["Node ID"] = id_int - 0x600;
@@ -124,7 +124,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 		translated["Data"] = `${object_dictionary[index][subindex]} (${hexify(index)}, ${hexify(subindex)}): `;
 
 		if ([0x2F, 0x2B, 0x23].includes(command)) {
-			translated["Data"] += hexify(concatify(data_int.slice(4, 8).toReversed())) // assuming little-endian
+			translated["Data"] += hexify(decode_bytes(data, [4, 5, 6, 7], false, "little")); // assuming little-endian
 		} else if (command == 0x40) {
 			translated["Data"] += "Read request";
 		} else {
@@ -138,14 +138,6 @@ function translate_row(timestamp, id, dlc_int, data) {
 	}
 
 	return translated;
-}
-
-function concatify(data_int) {
-	let result = 0;
-	for (const [i, datum_int] of data_int.toReversed().entries()) {
-		result += datum_int * (16 ** (i*2));
-	}
-	return result;
 }
 
 function hexify(number) {
