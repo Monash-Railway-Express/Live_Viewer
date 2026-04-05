@@ -73,7 +73,16 @@ window.onload = function () {
 					const translatedItem = document.createElement("pre");
 					item.innerText = messages[i];
 					const [timestamp, id, dlc, ...data] = messages[i].split(",");
-					translatedItem.innerText = JSON.stringify(translate_row(timestamp, id, parseInt(dlc), data));
+					translatedItem.innerText = JSON.stringify(
+						translate_row(timestamp, id, parseInt(dlc), data),
+						(key, value) => {
+							if (value === undefined) {
+								return "undefined";
+							} else {
+								return value;
+							}
+						}
+					);
 					appendLog(item, translatedItem);
 				}
 			};
