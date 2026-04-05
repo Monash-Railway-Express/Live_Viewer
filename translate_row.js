@@ -92,7 +92,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 					cols.push(i);
 				}
 				const raw = decode_bytes(data, cols, signed, "little");
-				translated["Data"] += `${object_dictionary[index][subindex]} (${index}, ${subindex}): ${raw} | `;
+				translated["Data"] += `${object_dictionary[index][subindex]} (${hexify(index)}, ${hexify(subindex)}): ${raw} | `;
 				current_byte = upper_byte;
 			}
 		} else {
@@ -105,7 +105,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 		translated["Function"] = "SDO Tx";
         translated["Node ID"] = id_int - 0x580;
         translated["Node"] = node_name[translated["Node ID"]];
-		translated["Data"] = `${object_dictionary[index][subindex]} (${index}, ${subindex}): `;
+		translated["Data"] = `${object_dictionary[index][subindex]} (${hexify(index)}, ${hexify(subindex)}): `;
 
 		if (command == 0x60) {
             translated["Data"] += "Write confirmation";
@@ -121,7 +121,7 @@ function translate_row(timestamp, id, dlc_int, data) {
         translated["Function"] = "SDO Rx";
         translated["Node ID"] = id_int - 0x600;
         translated["Node"] = node_name[translated["Node ID"]];
-		translated["Data"] = `${object_dictionary[index][subindex]} (${index}, ${subindex}): `;
+		translated["Data"] = `${object_dictionary[index][subindex]} (${hexify(index)}, ${hexify(subindex)}): `;
 
 		if ([0x2F, 0x2B, 0x23].includes(command)) {
 			translated["Data"] += hexify(concatify(data_int.slice(4, 8).toReversed())) // assuming little-endian
