@@ -91,7 +91,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 				for (let i = current_byte; i < upper_byte; i++) {
 					cols.push(i);
 				}
-				const raw = decode_bytes(data, cols, signed);
+				const raw = decode_bytes(data, cols, signed, "little");
 				translated["Data"] += `${object_dictionary[index][subindex]} (${index}, ${subindex}): ${raw} | `;
 				current_byte = upper_byte;
 			}
@@ -99,6 +99,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 			translated["Data"] = `Unmapped PDO COB-ID ${id} data ${data}`;
 		}
 	} else if (0x580 <= id_int && id_int <= 0x5FF) {
+		const command = data_int[0];
 		const index = concatify([data_int[2], data_int[1]]);
 		const subindex = data_int[3];
 		translated["Function"] = "SDO Tx";
@@ -106,14 +107,15 @@ function translate_row(timestamp, id, dlc_int, data) {
         translated["Node"] = node_name[translated["Node ID"]];
 		translated["Data"] = `${object_dictionary[index][subindex]} (${index}, ${subindex}): `;
 
-		if (data_int[0] == 0x60) {
+		if (command == 0x60) {
             translated["Data"] += "Write confirmation";
-		} else if ([0x4F, 0x4B, 0x43].includes(data_int[0])) {
+		} else if ([0x4F, 0x4B, 0x43].includes(command)) {
             translated["Data"] += hexify(concatify(data_int.slice(4, 8).toReversed())); // assuming little-endian
 		} else {
             translated["Data"] += `Unknown command ${data[0]} data ${data.slice(4, 8)}`;
 		}
 	} else if (0x600 <= id_int && id_int <= 0x67F) {
+		const command = data_int[0];
 		const index = concatify([data_int[2], data_int[1]]);
 		const subindex = data_int[3];
         translated["Function"] = "SDO Rx";
@@ -121,9 +123,9 @@ function translate_row(timestamp, id, dlc_int, data) {
         translated["Node"] = node_name[translated["Node ID"]];
 		translated["Data"] = `${object_dictionary[index][subindex]} (${index}, ${subindex}): `;
 
-		if ([0x2F, 0x2B, 0x23].includes(data_int[0])) {
+		if ([0x2F, 0x2B, 0x23].includes(command)) {
 			translated["Data"] += hexify(concatify(data_int.slice(4, 8).toReversed())) // assuming little-endian
-		} else if (data_int[0] == 0x40) {
+		} else if (command == 0x40) {
 			translated["Data"] += "Read request";
 		} else {
 			translated["Data"] += `Unknown command ${data[0]} data ${data.slice(4, 8)}`;

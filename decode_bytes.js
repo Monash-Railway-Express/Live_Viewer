@@ -28,7 +28,7 @@
  * 
  * @return The raw integer represented as a number type.
  */
-function decode_bytes(row, cols, signed=false, endian="little") {
+function decode_bytes(row, cols, signed, endian) {
 	let raw;
 
 	// Clean and convert each byte
