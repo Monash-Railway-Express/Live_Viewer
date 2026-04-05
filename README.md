@@ -6,6 +6,10 @@ Installable webpage to view CAN messages in the MREx Wallaby locomotive system i
 
 ### Installation
 
+Go to https://monash-railway-express.github.io/Live_Viewer
+
+An install prompt should appear. It might take a minute and you might need to interact with the page before it appears.
+
 ### Usage
 
 #### 1. Permit insecure WebSocket connections
