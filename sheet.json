@@ -3,14 +3,14 @@
 		"1": "Object dictionary not found after receiving SDO",
 		"2": "After SDO read request, Object dictionary on receiving node is not configured correctly.",
 		"3": "Unexpected error :(",
-		"4": "SDO write is not the same size as the recieving nodes object dictionary",
+		"4": "SDO write is not the same size as the receiving nodes object dictionary",
 		"5": "Failed to send SDO response",
 		"6": "SDO being transmitted is not the right size",
-		"7": "Failed to send sdo request",
+		"7": "Failed to send SDO request",
 		"8": "SDO response not received",
 		"9": "SDO Abort received",
 		"10": "Unexpected SDO CMD received in response",
-		"257": "Heartbeat was not recieved in time (Node id will tell you what node failed)",
+		"257": "Heartbeat was not received in time (Node id will tell you what node failed)",
 		"513": "NMT command failure (Node id will tell you which was target node)",
 		"769": "Max Minor emergency count reached",
 		"1025": "TPDO read mapping failed",
@@ -18,70 +18,187 @@
 		"1027": "TPDO transmission failed",
 		"1280": "Audio system SD card fault",
 		"1285": "Smoke Detected in the Locomotive",
-		"1286": "Temperature inside Locomotive is Too High"
+		"1286": "Temperature inside Locomotive Front is Too High",
+		"1287": "Temperature inside Locomotive Rear is Too High",
+		"33554448": "Brake fault",
+		"33554449": "Error with reading speed to determine if brake fault has occurred"
 	},
 
 	"object_dictionary": {
 		"12306": {
-			"1": "serviceBrake",
-			"0": "regenBrake"
+			"0": {
+				"alias": "od_regen_brake",
+				"interpretation": "unsigned"
+			},
+			"1": {
+				"alias": "od_service_brake",
+				"interpretation": {
+					"1": "on",
+					"0": "off"
+				}
+			},
+			"2": {
+				"alias": "od_ServiceBrakeRequest",
+				"interpretation": {
+					"1": "on",
+					"0": "off"
+				}
+			}
+		},
+		"12307": {
+			"3": {
+				"alias": "od_brake_threshold",
+				"interpretation": "hex"
+			}
 		},
 		"24831": {
-			"0": "desiredSpeed"
+			"0": {
+				"alias": "od_desired_speed",
+				"interpretation": "hex"
+			}
 		},
 		"24682": {
-			"0": "targetSpeed"
+			"0": {
+				"alias": "od_motor_command",
+				"interpretation": "hex"
+			}
 		},
 		"24684": {
-			"0": "trueSpeed"
+			"0": {
+				"alias": "od_true_speed",
+				"interpretation": "hex"
+			}
 		},
-		"24672": {
-			"0": "directionMode"
+		"24686": {
+			"0": {
+				"alias": "od_tractive_effort",
+				"interpretation": "hex"
+			}
 		},
-		"24673": {
-			"0": "conditionMode"
+		"24822": {
+			"0": {
+				"alias": "od_k_proportional_1",
+				"interpretation": "unsigned"
+			},
+			"1": {
+				"alias": "od_k_integral_1",
+				"interpretation": "unsigned"
+			},
+			"2": {
+				"alias": "od_k_derivative_1",
+				"interpretation": "unsigned"
+			},
+			"3": {
+				"alias": "od_k_proportional_2",
+				"interpretation": "unsigned"
+			},
+			"4": {
+				"alias": "od_k_integral_2",
+				"interpretation": "unsigned"
+			},
+			"5": {
+				"alias": "od_k_derivative_2",
+				"interpretation": "unsigned"
+			},
+			"6": {
+				"alias": "od_k_proportional_3",
+				"interpretation": "unsigned"
+			},
+			"7": {
+				"alias": "od_k_integral_3",
+				"interpretation": "unsigned"
+			},
+			"8": {
+				"alias": "od_k_derivative_3",
+				"interpretation": "unsigned"
+			},
+			"9": {
+				"alias": "od_k_proportional_4",
+				"interpretation": "unsigned"
+			},
+			"10": {
+				"alias": "od_k_integral_4",
+				"interpretation": "unsigned"
+			},
+			"11": {
+				"alias": "od_k_derivative_4",
+				"interpretation": "unsigned"
+			},
+			"12": {
+				"alias": "od_k_proportional_5",
+				"interpretation": "unsigned"
+			},
+			"13": {
+				"alias": "od_k_integral_5",
+				"interpretation": "unsigned"
+			},
+			"14": {
+				"alias": "od_k_derivative_5",
+				"interpretation": "unsigned"
+			}
 		},
-		"24677": {
-			"0": "horn"
-		},
-		"8192": {
-			"0": "Current",
-			"1": "Voltage",
-			"2": "State of charge",
-			"3": "Power",
-			"4": "Recovered energy"
-		}
-	},
-
-	"object_meaning": {
 		"24672": {
 			"0": {
-				"0": "reverse",
-				"1": "neutral",
-				"2": "forward"
+				"alias": "od_direction_mode",
+				"interpretation": {
+					"1": "back",
+					"2": "neutral",
+					"3": "fwd"
+				}
+			}
+		},
+		"24673": {
+			"0": {
+				"alias": "od_condition_mode",
+				"interpretation": "unsigned"
+			}
+		},
+		"24674": {
+			"0": {
+				"alias": "od_challenge_mode",
+				"interpretation": {
+					"1": "throttle control",
+					"2": "speed control",
+					"3": "autostop",
+					"4": "regen",
+					"5": "traction"
+				}
 			}
 		},
 		"24677": {
 			"0": {
-				"0": "released",
-				"1": "pressed"
+				"alias": "od_horn_toggle",
+				"interpretation": {
+					"1": "play sound",
+					"0": "default"
+				}
+			}
+		},
+		"4100": {
+			"0": {
+				"alias": "od_temperature_front",
+				"interpretation": "hex"
+			},
+			"1": {
+				"alias": "od_temperature_rear",
+				"interpretation": "hex"
 			}
 		}
 	},
 
 	"pdo_entries": {
-		"391": [["8192", "0", "32", true], ["8192", "1", "16", true], ["8192", "2", "16", true]]
+		"391": [["8192", "0", "32"], ["8192", "1", "16"], ["8192", "2", "16"]]
 	},
 
 	"node_name": {
-		"1": "Motor Controller",
+		"1": "Motor",
 		"2": "Brakes",
-		"3": "Driver Control",
-		"4": "Lights",
+		"3": "Driver Inputs",
+		"4": "Lights & Sensors",
 		"5": "Audio",
-		"6": "Sensor System",
+		"6": "Autostop Sensor System",
 		"7": "Battery",
-		"8": "CAN Logger",
+		"8": "Logger/Programmer",
 		"9": "Driver Screen"
 	}
 }
