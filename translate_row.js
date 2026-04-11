@@ -144,9 +144,9 @@ function translate_row(timestamp, id, dlc_int, data) {
 			translated["Data"] += `Unknown command ${data[0]}`;
 		}
 	} else if (0x700 <= id_int && id_int <= 0x77F) {
-        translated["Function"] = "Hearbeat"
-        translated["Node ID"] = id_int - 0x700
-        translated["Node"] = node_name[translated["Node ID"]]
+        translated["Function"] = "Heartbeat";
+        translated["Node ID"] = id_int - 0x700;
+        translated["Node"] = node_name[translated["Node ID"]];
 		translated["Data"] = `${nmt_state[data_int[0]]} (${data[0]})`;
 	}
 
