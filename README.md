@@ -30,7 +30,7 @@ Ensure that the URL entered in the textbox is the WebSocket server to which you 
 
 ## JSON comments
 
-sheet.json last updated 07/04/2026 from https://docs.google.com/spreadsheets/d/1OaXG5B06xnvpNkGQIkrtbM_n-pCCqvnd99yezD7YYoQ/edit?usp=sharing
+sheet.json last updated 14/04/2026 from https://docs.google.com/spreadsheets/d/1OaXG5B06xnvpNkGQIkrtbM_n-pCCqvnd99yezD7YYoQ/edit?usp=sharing
 
 sheet.object_dictionary.index.subindex.interpretation is "unsigned", "signed", "hex" or else a JSON object listing state descriptions.
 
