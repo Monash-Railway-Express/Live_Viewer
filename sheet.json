@@ -51,28 +51,16 @@
 				"interpretation": "hex"
 			}
 		},
-		"12307": {
-			"3": {
-				"alias": "od_brake_threshold",
-				"interpretation": "hex"
-			}
-		},
-		"24831": {
-			"0": {
-				"alias": "od_desired_speed",
-				"interpretation": "hex"
-			}
-		},
 		"24682": {
 			"0": {
 				"alias": "od_motor_command",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			}
 		},
 		"24684": {
 			"0": {
 				"alias": "od_true_speed",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			}
 		},
 		"24686": {
@@ -183,11 +171,11 @@
 		"4100": {
 			"0": {
 				"alias": "od_temperature_front",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			},
 			"1": {
 				"alias": "od_temperature_rear",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			}
 		},
 		"8192": {
@@ -209,7 +197,7 @@
 			},
 			"4": {
 				"alias": "od_recovered_energy",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			}
 		}
 	},
