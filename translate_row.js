@@ -104,10 +104,10 @@ function translate_row(timestamp, id, dlc_int, data) {
 			translated["Data"] = `Unmapped PDO COB-ID ${id} data ${data}`;
 		}
 	} else if (0x580 <= id_int && id_int <= 0x5FF) {
-		const { alias, interpretation } = object_dictionary[index][subindex];
 		const command = data_int[0];
 		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
+		const { alias, interpretation } = object_dictionary[index][subindex];
 		translated["Function"] = "SDO Tx";
         translated["Node ID"] = id_int - 0x580;
         translated["Node"] = node_name[translated["Node ID"]];
@@ -124,10 +124,10 @@ function translate_row(timestamp, id, dlc_int, data) {
             translated["Data"] += `Unknown command ${data[0]}`;
 		}
 	} else if (0x600 <= id_int && id_int <= 0x67F) {
-		const { alias, interpretation } = object_dictionary[index][subindex];
 		const command = data_int[0];
 		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
+		const { alias, interpretation } = object_dictionary[index][subindex];
         translated["Function"] = "SDO Rx";
         translated["Node ID"] = id_int - 0x600;
         translated["Node"] = node_name[translated["Node ID"]];
@@ -165,7 +165,7 @@ function interpret(data, cols, interpretation) {
 	} else if (interpretation === "hex") {
 		return hexify(decode_bytes(data, cols, false, "little"));
 	} else {
-		return interpretation(decode_bytes(data, cols, false, "little"));
+		return interpretation[decode_bytes(data, cols, false, "little")];
 	}
 }
 
