@@ -60,24 +60,24 @@ function translate_row(timestamp, id, dlc_int, data) {
 	});
 
 	if (id_int === 0x000) {
+		const nodeID = data_int[1];
 		translated["Function"] = "NMT";
-        translated["Node ID"] = data_int[1];
-        translated["Node"] = node_name[translated["Node ID"]];
+        translated["Node"] = `${node_name[nodeID]} (${nodeID})`;
 		translated["Data"] = `${nmt_state[data_int[0]]} (${hexify(data[0])})`;
 	} else if (0x080 <= id_int && id_int <= 0x0FF) {
+		const nodeID = id_int - 0x080;
 		const code_int = decode_bytes(data, [2, 3, 4, 5], false, "little");
 		const meaning = emcy_message[code_int];
 		const priority = emcy_priority[data_int[0]];
 		const type = emcy_type[data_int[5]];
 		const location = node_name[parseInt(data_int[1])];
 		translated["Function"] = "EMCY";
-		translated["Node ID"] = id_int - 0x080;
-        translated["Node"] = node_name[translated["Node ID"]];
+        translated["Node"] = `${node_name[nodeID]} (${nodeID})`;
 		translated["Data"] = `${priority} (${data_int[0]}) ${type} (${data_int[5]}) at ${location} (${data_int[1]}): ${meaning} (${hexify(code_int)})`;
 	} else if (0x180 <= id_int && id_int <= 0x57F) {
+		const nodeID = id_int % 0x80;
 		translated["Function"] = "PDO";
-        translated["Node ID"] = id_int % 0x80;
-        translated["Node"] = node_name[translated["Node ID"]];
+        translated["Node"] = `${node_name[nodeID]} (${nodeID})`;
         // Assuming object data boundaries are on byte boundaries - reflects a CAN MREX implementation assumption
 		translated["Data"] = "|";
 		let current_byte = 0;
@@ -104,13 +104,13 @@ function translate_row(timestamp, id, dlc_int, data) {
 			translated["Data"] = `Unmapped PDO COB-ID ${id} data ${data}`;
 		}
 	} else if (0x580 <= id_int && id_int <= 0x5FF) {
+		const nodeID = id_int - 0x580;
 		const command = data_int[0];
 		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
 		const { alias, interpretation } = getOD(object_dictionary, index, subindex);
 		translated["Function"] = "SDO Tx";
-        translated["Node ID"] = id_int - 0x580;
-        translated["Node"] = node_name[translated["Node ID"]];
+        translated["Node"] = `${node_name[nodeID]} (${nodeID})`;
 		translated["Data"] = `${alias} (${hexify(index)}, ${hexify(subindex)}): `;
 
 		if (command == 0x60) {
@@ -124,13 +124,13 @@ function translate_row(timestamp, id, dlc_int, data) {
             translated["Data"] += `Unknown command ${data[0]}`;
 		}
 	} else if (0x600 <= id_int && id_int <= 0x67F) {
+		const nodeID = id_int - 0x600;
 		const command = data_int[0];
 		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
 		const { alias, interpretation } = getOD(object_dictionary, index, subindex);
         translated["Function"] = "SDO Rx";
-        translated["Node ID"] = id_int - 0x600;
-        translated["Node"] = node_name[translated["Node ID"]];
+        translated["Node"] = `${node_name[nodeID]} (${nodeID})`;
 		translated["Data"] = `${alias} (${hexify(index)}, ${hexify(subindex)}): `;
 
 		if ([0x2F, 0x2B, 0x23].includes(command)) {
@@ -144,11 +144,15 @@ function translate_row(timestamp, id, dlc_int, data) {
 			translated["Data"] += `Unknown command ${data[0]}`;
 		}
 	} else if (0x700 <= id_int && id_int <= 0x77F) {
+		const nodeID = id_int - 0x700;
         translated["Function"] = "Heartbeat";
-        translated["Node ID"] = id_int - 0x700;
-        translated["Node"] = node_name[translated["Node ID"]];
+        translated["Node"] = `${node_name[nodeID]} (${nodeID})`;
 		translated["Data"] = `${nmt_state[data_int[0]]} (${hexify(data[0])})`;
+	} else {
+		translated["Function"] = "undefined";
 	}
+
+	translated["Function"] += ` (${hexify(id)})`;
 
 	return translated;
 }
