@@ -154,7 +154,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 }
 
 function hexify(number) {
-	return `0x${number.toString(16)}`
+	return `0x${parseInt(number).toString(16)}`
 }
 
 function interpret(data, cols, interpretation) {
