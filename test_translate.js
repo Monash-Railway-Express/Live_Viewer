@@ -14,8 +14,30 @@
  */
 
 import { translate_row } from "./translate_row.js";
+import testCases from "./test_translate.json" with { type: "json" };
 
-// translate_row("");
+const casesContainer = document.querySelector("#cases");
+for (const testCase of testCases) {
+	const translationFields = ["Timestamp", "Function", "Node ID", "Node", "Data"];
+	const [timestamp, id, dlc, ...data] = testCase.input.split(",");
+	const translated = translate_row(timestamp, id, parseInt(dlc), data);
+	let pass = true;
+	for (const field of translationFields) {
+		pass = pass && (translated[field] == testCase[field]);
+	}
+	
+	const result = document.createElement("p");
+	if (pass) {
+		result.textContent = `Test case "${testCase.description}" PASSED.`;
+	} else {
+		result.style.border = "solid red";
+		result.textContent = `Test case "${testCase.description}" FAILED.
+		Test case: ${JSON.stringify(testCase)}
+		Result: ${JSON.stringify(translated)}`;
+	}
+	casesContainer.appendChild(result);
+}
+
 document.querySelector("#row").addEventListener("input", (event) => {
 	document.querySelector("#translation").textContent = "";
 	for (const row of event.target.value.split("\n")) {
