@@ -63,7 +63,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 		translated["Function"] = "NMT";
         translated["Node ID"] = data_int[1];
         translated["Node"] = node_name[translated["Node ID"]];
-		translated["Data"] = nmt_state[data_int[0]];
+		translated["Data"] = `${nmt_state[data_int[0]]} (${hexify(data[0])})`;
 	} else if (0x080 <= id_int && id_int <= 0x0FF) {
 		const code_int = decode_bytes(data, [2, 3, 4, 5], false, "little");
 		const meaning = emcy_message[code_int];
@@ -79,7 +79,7 @@ function translate_row(timestamp, id, dlc_int, data) {
         translated["Node ID"] = id_int % 0x80;
         translated["Node"] = node_name[translated["Node ID"]];
         // Assuming object data boundaries are on byte boundaries - reflects a CAN MREX implementation assumption
-		translated["Data"] = "| ";
+		translated["Data"] = "|";
 		let current_byte = 0;
 		if (id_int in pdo_entries) {
 			for (
@@ -97,7 +97,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 				}
 				const meaning = interpret(data, cols, interpretation);
 				const raw = interpret(data, cols, "hex");
-				translated["Data"] += `${alias} (${hexify(index)}, ${hexify(subindex)}): ${meaning} (${raw}) | `;
+				translated["Data"] = `| ${alias} (${hexify(index)}, ${hexify(subindex)}): ${meaning} (${raw}) ${translated["Data"]}`;
 				current_byte = upper_byte;
 			}
 		} else {
@@ -147,7 +147,7 @@ function translate_row(timestamp, id, dlc_int, data) {
         translated["Function"] = "Heartbeat";
         translated["Node ID"] = id_int - 0x700;
         translated["Node"] = node_name[translated["Node ID"]];
-		translated["Data"] = `${nmt_state[data_int[0]]} (${data[0]})`;
+		translated["Data"] = `${nmt_state[data_int[0]]} (${hexify(data[0])})`;
 	}
 
 	return translated;

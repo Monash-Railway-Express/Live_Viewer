@@ -12,7 +12,7 @@
 		"description": "PDO",
 		"input": "2026-4-13 22:33:21,0x183,4,0xFF,0x03,0x18,0x00,,,,",
 		"Timestamp": "2026-4-13 22:33:21",
-		"Function": "NMT",
+		"Function": "PDO",
 		"Node ID": 3,
 		"Node": "Driver Inputs",
 		"Data": "| od_regen_brake (0x3012, 0x0): 24 (0x18) | od_motor_command (0x606a, 0x0): 1023 (0x3ff) |"
