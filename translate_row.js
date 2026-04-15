@@ -87,9 +87,9 @@ function translate_row(timestamp, id, dlc_int, data) {
 					index,
 					subindex,
 					bits
-				] in pdo_entries[id_int].toReversed()
+				] of pdo_entries[id_int].toReversed()
 			) {
-				const { alias, interpretation } = object_dictionary[index] === undefined ? undefined : object_dictionary[index][subindex];
+				const { alias, interpretation } = getOD(object_dictionary, index, subindex);
 				const upper_byte = current_byte + Math.floor(bits / 8);
 				const cols = [];
 				for (let i = current_byte; i < upper_byte; i++) {
@@ -107,7 +107,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 		const command = data_int[0];
 		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
-		const { alias, interpretation } = object_dictionary[index] === undefined ? undefined : object_dictionary[index][subindex];
+		const { alias, interpretation } = getOD(object_dictionary, index, subindex);
 		translated["Function"] = "SDO Tx";
         translated["Node ID"] = id_int - 0x580;
         translated["Node"] = node_name[translated["Node ID"]];
@@ -127,7 +127,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 		const command = data_int[0];
 		const index = decode_bytes(data, [1, 2], false, "little");
 		const subindex = data_int[3];
-		const { alias, interpretation } = object_dictionary[index] === undefined ? undefined : object_dictionary[index][subindex];
+		const { alias, interpretation } = getOD(object_dictionary, index, subindex);
         translated["Function"] = "SDO Rx";
         translated["Node ID"] = id_int - 0x600;
         translated["Node"] = node_name[translated["Node ID"]];
@@ -166,6 +166,17 @@ function interpret(data, cols, interpretation) {
 		return hexify(decode_bytes(data, cols, false, "little"));
 	} else {
 		return interpretation[decode_bytes(data, cols, false, "little")];
+	}
+}
+
+function getOD(object_dictionary, index, subindex) {
+	if (index in object_dictionary && subindex in object_dictionary[index]) {
+		return object_dictionary[index][subindex];
+	} else {
+		return {
+			"alias": undefined,
+			"interpretation": "hex"
+		}
 	}
 }
 
