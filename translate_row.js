@@ -114,14 +114,14 @@ function translate_row(timestamp, id, dlc_int, data) {
 		translated["Data"] = `${alias} (${hexify(index)}, ${hexify(subindex)}): `;
 
 		if (command == 0x60) {
-            translated["Data"] += "Write confirmation";
+            translated["Data"] += `Write confirmation (${hexify(command)})`;
 		} else if ([0x4F, 0x4B, 0x43].includes(command)) {
 			const cols = [4, 5, 6, 7];
 			const meaning = interpret(data, cols, interpretation);
 			const raw = interpret(data, cols, "hex");
-            translated["Data"] += `${meaning} (${raw})`; // assuming little-endian
+            translated["Data"] += `Read response (${hexify(command)}) ${meaning} (${raw})`; // assuming little-endian
 		} else {
-            translated["Data"] += `Unknown command ${data[0]}`;
+            translated["Data"] += `undefined (${hexify(command)})`;
 		}
 	} else if (0x600 <= id_int && id_int <= 0x67F) {
 		const nodeID = id_int - 0x600;
@@ -137,11 +137,11 @@ function translate_row(timestamp, id, dlc_int, data) {
 			const cols = [4, 5, 6, 7];
 			const meaning = interpret(data, cols, interpretation);
 			const raw = interpret(data, cols, "hex");
-            translated["Data"] += `${meaning} (${raw})`; // assuming little-endian
+            translated["Data"] += `Write (${hexify(command)}) ${meaning} (${raw})`; // assuming little-endian
 		} else if (command == 0x40) {
-			translated["Data"] += "Read request";
+			translated["Data"] += `Read request (${hexify(command)})`;
 		} else {
-			translated["Data"] += `Unknown command ${data[0]}`;
+			translated["Data"] += `undefined (${hexify(command)})`;
 		}
 	} else if (0x700 <= id_int && id_int <= 0x77F) {
 		const nodeID = id_int - 0x700;

@@ -14,6 +14,14 @@
 		"Data": "Operational (0x1)"
 	},
 	{
+		"description": "NMT undefined node",
+		"input": "2026-4-13 22:31:53,0x0,2,0x01,0xaf,,,,,,",
+		"Timestamp": "2026-4-13 22:31:53",
+		"Function": "NMT (0x0)",
+		"Node": "undefined (175)",
+		"Data": "Operational (0x1)"
+	},
+	{
 		"description": "PDO",
 		"input": "2026-4-13 22:33:21,0x183,4,0xFF,0x03,0x18,0x00,,,,",
 		"Timestamp": "2026-4-13 22:33:21",
@@ -22,12 +30,36 @@
 		"Data": "| od_regen_brake (0x3012, 0x0): 24 (0x18) | od_motor_command (0x606a, 0x0): 1023 (0x3ff) |"
 	},
 	{
-		"description": "SDO read response undefined",
+		"description": "PDO undefined node",
+		"input": "2026-4-13 22:33:21,0x1AF,4,0xFF,0x03,0x18,0x00,,,,",
+		"Timestamp": "2026-4-13 22:33:21",
+		"Function": "PDO (0x1af)",
+		"Node": "undefined (47)",
+		"Data": "Unmapped PDO COB-ID 0x1AF data 0xFF,0x03,0x18,0x00"
+	},
+	{
+		"description": "PDO unmapped COB-ID",
+		"input": "2026-4-13 22:33:21,0x503,4,0xFF,0x03,0x18,0x00,,,,",
+		"Timestamp": "2026-4-13 22:33:21",
+		"Function": "PDO (0x503)",
+		"Node": "Driver Inputs (3)",
+		"Data": "Unmapped PDO COB-ID 0x503 data 0xFF,0x03,0x18,0x00"
+	},
+	{
+		"description": "SDO read response",
+		"input": "2026-4-13 22:32:27,0x583,8,0x4F,0x60,0x60,0x00,0x01,0x00,0x00,0x00",
+		"Timestamp": "2026-4-13 22:32:27",
+		"Function": "SDO Tx (0x583)",
+		"Node": "Driver Inputs (3)",
+		"Data": "od_direction_mode (0x6060, 0x0): Read response (0x4f) back (0x1)"
+	},
+	{
+		"description": "SDO read response undefined interpretation",
 		"input": "2026-4-13 22:31:44,0x583,8,0x4F,0x60,0x60,0x00,0x00,0x00,0x00,0x00",
 		"Timestamp": "2026-4-13 22:31:44",
 		"Function": "SDO Tx (0x583)",
 		"Node": "Driver Inputs (3)",
-		"Data": "od_direction_mode (0x6060, 0x0): undefined (0x0)"
+		"Data": "od_direction_mode (0x6060, 0x0): Read response (0x4f) undefined (0x0)"
 	},
 	{
 		"description": "SDO write confirmation",
@@ -35,7 +67,31 @@
 		"Timestamp": "2026-4-13 22:32:10",
 		"Function": "SDO Tx (0x581)",
 		"Node": "Motor (1)",
-		"Data": "od_direction_mode (0x6060, 0x0): Write confirmation"
+		"Data": "od_direction_mode (0x6060, 0x0): Write confirmation (0x60)"
+	},
+	{
+		"description": "SDO read response undefined index",
+		"input": "2026-4-13 22:31:44,0x583,8,0x4F,0xAF,0xAF,0x03,0xAF,0x00,0x00,0x00",
+		"Timestamp": "2026-4-13 22:31:44",
+		"Function": "SDO Tx (0x583)",
+		"Node": "Driver Inputs (3)",
+		"Data": "undefined (0xafaf, 0x3): Read response (0x4f) 0xaf (0xaf)"
+	},
+	{
+		"description": "SDO write confirmation undefined subindex",
+		"input": "2026-4-13 22:32:10,0x581,8,0x60,0x60,0x60,0xAF,0x00,0x00,0x00,0x00",
+		"Timestamp": "2026-4-13 22:32:10",
+		"Function": "SDO Tx (0x581)",
+		"Node": "Motor (1)",
+		"Data": "undefined (0x6060, 0xaf): Write confirmation (0x60)"
+	},
+	{
+		"description": "SDO Tx undefined command",
+		"input": "2026-4-13 22:31:44,0x583,8,0xAF,0x60,0x60,0x00,0x00,0x00,0x00,0x00",
+		"Timestamp": "2026-4-13 22:31:44",
+		"Function": "SDO Tx (0x583)",
+		"Node": "Driver Inputs (3)",
+		"Data": "od_direction_mode (0x6060, 0x0): undefined (0xaf)"
 	},
 	{
 		"description": "SDO read request",
@@ -43,7 +99,7 @@
 		"Timestamp": "2026-4-13 22:31:44",
 		"Function": "SDO Rx (0x603)",
 		"Node": "Driver Inputs (3)",
-		"Data": "od_direction_mode (0x6060, 0x0): Read request"
+		"Data": "od_direction_mode (0x6060, 0x0): Read request (0x40)"
 	},
 	{
 		"description": "SDO write request",
@@ -51,7 +107,15 @@
 		"Timestamp": "2026-4-13 22:32:10",
 		"Function": "SDO Rx (0x601)",
 		"Node": "Motor (1)",
-		"Data": "od_direction_mode (0x6060, 0x0): back (0x1)"
+		"Data": "od_direction_mode (0x6060, 0x0): Write (0x2f) back (0x1)"
+	},
+	{
+		"description": "SDO Rx undefined command",
+		"input": "2026-4-13 22:32:10,0x601,8,0xAF,0x60,0x60,0x00,0x01,0x00,0x00,0x00",
+		"Timestamp": "2026-4-13 22:32:10",
+		"Function": "SDO Rx (0x601)",
+		"Node": "Motor (1)",
+		"Data": "od_direction_mode (0x6060, 0x0): undefined (0xaf)"
 	},
 	{
 		"description": "Heartbeat",
