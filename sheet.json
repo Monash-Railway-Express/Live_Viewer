@@ -178,6 +178,12 @@
 				"interpretation": "unsigned"
 			}
 		},
+		"4176": {
+			"0": {
+				"alias": "od_autostop_detection",
+				"interpretation": "unsigned"
+			}
+		},
 		"8192": {
 			"0": {
 				"alias": "od_current",
