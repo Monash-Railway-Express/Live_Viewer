@@ -87,7 +87,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 					index,
 					subindex,
 					bits
-				] of pdo_entries[id_int].toReversed()
+				] of pdo_entries[id_int]
 			) {
 				const { alias, interpretation } = getOD(object_dictionary, index, subindex);
 				const upper_byte = current_byte + Math.floor(bits / 8);
@@ -97,7 +97,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 				}
 				const meaning = interpret(data, cols, interpretation);
 				const raw = interpret(data, cols, "hex");
-				translated["Data"] = `| ${alias} (${hexify(index)}, ${hexify(subindex)}): ${meaning} (${raw}) ${translated["Data"]}`;
+				translated["Data"] += ` ${alias} (${hexify(index)}, ${hexify(subindex)}): ${meaning} (${raw}) |`;
 				current_byte = upper_byte;
 			}
 		} else {
