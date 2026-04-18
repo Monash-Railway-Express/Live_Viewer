@@ -22,6 +22,9 @@
  */
 
 import { translate_row } from "./translate_row.js";
+import sheet from "./sheet.json" with { type: "json" };
+
+const { node_name } = sheet;
 
 window.onload = function () {
 	let conn;
@@ -30,6 +33,24 @@ window.onload = function () {
 	const translatedLog = document.createElement("div");
 
 	log.replaceChildren(rawLog);
+
+	const heartbeatStati = {};
+	const lastSeen = {};
+	for (const nodeID in node_name) {
+		heartbeatStati[nodeID] = document.createElement("div");
+		document.getElementById("heartbeats").appendChild(heartbeatStati[nodeID]);
+		lastSeen[`${node_name[nodeID]} (${nodeID})`] = 0;
+	}
+
+	setInterval(function () {
+		for (const nodeID in node_name) {
+			if (Date.now() - lastSeen[`${node_name[nodeID]} (${nodeID})`] > 2000) {
+				heartbeatStati[nodeID].textContent = `${node_name[nodeID]} 💀`;
+			} else {
+				heartbeatStati[nodeID].textContent = `${node_name[nodeID]} ⚡`;
+			}
+		}
+	}, 2000);
 
 	function appendLog(item, translatedItem) {
 		const doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
@@ -75,8 +96,9 @@ window.onload = function () {
 					const translatedItem = document.createElement("pre");
 					item.innerText = messages[i];
 					const [timestamp, id, dlc, ...data] = messages[i].split(",");
+					const translated = translate_row(timestamp, id, parseInt(dlc), data);
 					translatedItem.innerText = JSON.stringify(
-						translate_row(timestamp, id, parseInt(dlc), data),
+						translated,
 						(key, value) => {
 							if (value === undefined) {
 								return "undefined";
@@ -86,6 +108,9 @@ window.onload = function () {
 						}
 					);
 					appendLog(item, translatedItem);
+					if (translated["Function"].includes("Heartbeat")) {
+						lastSeen[translated["Node"]] = Date.now();
+					}
 				}
 			};
 		};
