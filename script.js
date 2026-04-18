@@ -54,7 +54,8 @@ window.onload = function () {
 	};
 
 	if (window["WebSocket"]) {
-		document.getElementById("connect").onclick = function (evt) {
+		document.getElementById("connect").onclick = connect;
+		function connect(evt) {
 			document.getElementById("connect").disabled = true;
 			document.getElementById("status").innerHTML = "Connecting...";
 			conn = new WebSocket(document.getElementById("wsURL").value);
@@ -65,6 +66,7 @@ window.onload = function () {
 			conn.onclose = function (evt) {
 				document.getElementById("connect").disabled = false;
 				document.getElementById("status").innerHTML = "Connection closed or failed.";
+				connect();
 			};
 			conn.onmessage = function (evt) {
 				const messages = evt.data.split('\n');
