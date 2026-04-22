@@ -27,7 +27,6 @@ import sheet from "./sheet.json" with { type: "json" };
 const { node_name } = sheet;
 
 window.onload = function () {
-	let conn;
 	const log = document.getElementById("log");
 	const rawLog = document.createElement("div");
 	const translatedLog = document.createElement("div");
@@ -74,20 +73,22 @@ window.onload = function () {
 		translatedLog.innerText = "";
 	};
 
-	if (window["WebSocket"]) {
-		document.getElementById("connect").onclick = connect;
-		function connect(evt) {
+	if (window.EventSource) {
+		let conn;
+		document.getElementById("connect").onclick = function (evt) {
 			document.getElementById("connect").disabled = true;
 			document.getElementById("status").innerHTML = "Connecting...";
-			conn = new WebSocket(document.getElementById("wsURL").value);
+			conn = new EventSource(document.getElementById("sseURL").value);
 
 			conn.onopen = function (evt) {
-				document.getElementById("status").innerHTML = "Connection opened.";
-			}
-			conn.onclose = function (evt) {
 				document.getElementById("connect").disabled = false;
-				document.getElementById("status").innerHTML = "Connection closed or failed.";
-				connect();
+				document.getElementById("status").innerHTML = "Connection opened.";
+			};
+			conn.onerror = function (evt) {
+				if (evt.target.readyState != EventSource.OPEN) {
+					document.getElementById("connect").disabled = false;
+					document.getElementById("status").innerHTML = "Connection closed or failed.";
+				}
 			};
 			conn.onmessage = function (evt) {
 				const messages = evt.data.split('\n');

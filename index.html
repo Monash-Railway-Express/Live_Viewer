@@ -29,13 +29,14 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
     </head>
     <body>
         <fieldset>
+            <legend>Information</legend>
+            <div>Version 2.0.0</div>
             <div>Ensure that you are on the MREx CAN Logger Wi-Fi, password YesWeCAN.</div>
-            <div>You will need to <a href="https://github.com/Monash-Railway-Express/Live_Viewer/blob/main/README.md">permit insecure WebSocket connections</a> on this site.</div>
         </fieldset>
         <fieldset>
             <legend>Server Status</legend>
             <input type="button" id="connect" value="Connect">
-            <input type="text" id="wsURL" value="ws://10.0.0.1/ws">
+            <input type="text" id="sseURL" value="http://10.0.0.1/events">
             <span id="status">Not connected.</span>
             <span id="error"></span>
         </fieldset>
