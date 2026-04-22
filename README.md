@@ -12,21 +12,17 @@ An install prompt should appear. It might take a minute and you might need to in
 
 ### Usage
 
-#### 1. Permit insecure WebSocket connections
-
-If using a Chromium browser such as Chrome or Edge: go to chrome://flags and search for Insecure origins treated as secure. Enter the URL of any insecure WebSocket domain that you wish to access such as ws://10.0.0.1 and select Enabled. Reload your browser. [Screenshot](./insecure.png).
-
-#### 2. Open the viewer
+#### 1. Open the viewer
 
 https://monash-railway-express.github.io/Live_Viewer or through the installed application.
 
-#### 3. Connect to the MREx CAN Logger Wi-Fi
+#### 2. Connect to the MREx CAN Logger Wi-Fi
 
 Password "YesWeCAN".
 
-#### 4. Connect to the live feed
+#### 3. Connect to the live feed
 
-Ensure that the URL entered in the textbox is the WebSocket server to which you would like to connect (such as ws://10.0.0.1/ws) and hit the Connect button. If you succesfully connect, the server status should display "Connection opened.".
+Ensure that the URL entered in the textbox is the Server-Sent Events (Event Source) server to which you would like to connect (such as http://10.0.0.1/events) and hit the Connect button. If you succesfully connect, the server status should display "Connection opened.".
 
 ## JSON comments
 
