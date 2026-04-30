@@ -76,6 +76,10 @@ window.onload = function () {
 	if (window.EventSource) {
 		let conn;
 		document.getElementById("connect").onclick = function (evt) {
+			if (conn) {
+				conn.close();
+			}
+			
 			document.getElementById("connect").disabled = true;
 			document.getElementById("status").innerHTML = "Connecting...";
 			conn = new EventSource(document.getElementById("sseURL").value);
