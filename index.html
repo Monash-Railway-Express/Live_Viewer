@@ -26,6 +26,7 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
         <link rel="stylesheet" href="style.css">
         <script type="module" src="script.js"></script>
         <link rel="manifest" href="manifest.json">
+        <link rel="icon" type="image/png" href="192.png">
     </head>
     <body>
         <fieldset>
@@ -35,8 +36,8 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
         </fieldset>
         <fieldset>
             <legend>Server Status</legend>
-            <input type="button" id="connect" value="Connect">
-            <input type="text" id="sseURL" value="http://10.0.0.1/events">
+            <input type="button" id="connect" value="Connect" disabled>
+            <input type="text" id="sseURL" value="http://10.0.0.8/events">
             <span id="status">Not connected.</span>
             <span id="error"></span>
         </fieldset>

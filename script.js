@@ -74,6 +74,8 @@ window.onload = function () {
 	};
 
 	if (window.EventSource) {
+		document.getElementById("connect").disabled = false;
+		
 		let conn;
 		document.getElementById("connect").onclick = function (evt) {
 			if (conn) {

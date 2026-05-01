@@ -28,7 +28,7 @@ self.addEventListener("fetch", (event) => {
 	if (!event.request.url.includes("localhost:8000") && !event.request.url.includes("https://monash-railway-express.github.io")) {
 		return;
 	}
-	console.log(event.request.url);
+	
 	// Open the cache
 	event.respondWith(caches.open(cacheName).then((cache) => {
 		// Go to the network first
