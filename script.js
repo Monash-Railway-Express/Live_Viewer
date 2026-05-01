@@ -55,6 +55,12 @@ window.onload = function () {
 		const doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
 		rawLog.appendChild(item);
 		translatedLog.appendChild(translatedItem);
+
+		if (rawLog.childElementCount > 1000) {
+			rawLog.removeChild(rawLog.firstElementChild);
+			translatedLog.removeChild(translatedLog.firstElementChild);
+		}
+
 		if (doScroll) {
 			log.scrollTop = log.scrollHeight - log.clientHeight;
 		}
@@ -123,7 +129,7 @@ window.onload = function () {
 		};
 	} else {
 		const item = document.createElement("pre");
-		item.innerHTML = "<b>Your browser does not support WebSockets.</b>";
+		item.innerHTML = "<b>Your browser does not support Server-Sent Events.</b>";
 		appendLog(item);
 		document.getElementById("connect").disabled = true;
 	}
