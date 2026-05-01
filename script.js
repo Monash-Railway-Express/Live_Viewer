@@ -83,6 +83,13 @@ window.onload = function () {
 		document.getElementById("connect").disabled = false;
 		
 		let conn;
+		
+		document.getElementById("disconnect").onclick = function (evt) {
+			if (conn) {
+				conn.close();
+			}
+		}
+
 		document.getElementById("connect").onclick = function (evt) {
 			if (conn) {
 				conn.close();
