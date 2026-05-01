@@ -66,6 +66,10 @@ window.onload = function () {
 		}
 	}
 
+	document.getElementById("autoscroll").onclick = function (evt) {
+		log.scrollTop = log.scrollHeight - log.clientHeight;
+	};
+
 	document.getElementById("translate").onclick = function (evt) {
 		if (log.firstChild === rawLog) {
 			log.replaceChildren(translatedLog);
@@ -83,7 +87,7 @@ window.onload = function () {
 		document.getElementById("connect").disabled = false;
 		
 		let conn;
-		
+
 		document.getElementById("disconnect").onclick = function (evt) {
 			if (conn) {
 				conn.close();
