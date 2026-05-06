@@ -1,5 +1,5 @@
 <!--
-@file index.html
+@file serial.html
 @brief Markup for webpage layout and links to style and script.
 
 @details
@@ -8,49 +8,40 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
 
 @author Nhan Nguyen
 
-@date 01/05/2026
+@date 06/05/2026
 
-@version 2.1.0
+@version 2.2.0
 
 @organisation MREX
 
 @see style.css
-@see script.js
+@see serial.js
 @see https://github.com/Monash-Railway-Express/MREx_Nodes/blob/main/nodes/node8-logger/CAN_logger/wshtml.h
 -->
 
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <title>Live Feed - MREx CAN Logger</title>
+        <title>Live Feed - Serial</title>
         <link rel="stylesheet" href="style.css">
-        <script type="module" src="script.js"></script>
+        <script type="module" src="serial.js"></script>
         <link rel="manifest" href="manifest.json">
         <link rel="icon" type="image/png" href="192.png">
     </head>
     <body>
         <fieldset>
             <legend>Information</legend>
-            <div>Version 2.1.0</div>
+            <div>Version 2.2.0</div>
             <div>Ensure that you are on the MREx CAN Logger Wi-Fi, password YesWeCAN.</div>
         </fieldset>
-        <fieldset>
-            <legend>Server Status</legend>
-            <input type="button" id="connect" value="Connect" disabled>
-            <input type="text" id="sseURL" value="http://10.0.0.8/events">
-            <input type="button" id="disconnect" value="Disconnect">
-            <span id="status">Not connected.</span>
-            <span id="error"></span>
-        </fieldset>
-        <fieldset>
-            <legend>CAN Heartbeat Status</legend>
-            &#128128; Heartbeat lost &#9889; Detecting heartbeat
-            <div id="heartbeats"></div>
+        <fieldset id="connections">
+            <legend>Serial Connections</legend>
+            <input type="button" id="connect" value="Reconnect" disabled>
+            &#128128; Disconnected/error &#10024; Attempting to connect... &#9889; Connected
         </fieldset>
         <fieldset>
             <legend>Feed</legend>
             <input type="button" id="autoscroll" value="Jump">
-            <input type="button" id="translate" value="Toggle translation">
             <input type="button" id="clear" value="Clear">
             <div id="log"></div>
         </fieldset>

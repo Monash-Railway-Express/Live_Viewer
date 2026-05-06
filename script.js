@@ -1,9 +1,9 @@
 /**
  * @file script.js
- * @brief Provides interactivity and WebSocket connection.
+ * @brief Provides interactivity and SSE connection.
  * 
  * @details
- * Connect to the WebSocket server to display live CAN messages and toggle translation layer.
+ * Connect to the Server-Sent Event Source server to display live CAN messages and toggle translation layer.
  * WebSocket client webpage originally based on
  * https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/Chp_RT_not/ex-bro-bas-not-sub5.htm
  * Service worker registration code from
@@ -11,9 +11,9 @@
  * 
  * @author Nhan Nguyen
  * 
- * @date 22/04/2026
+ * @date 01/05/2026
  * 
- * @version 2.0.0
+ * @version 2.1.0
  * 
  * @organisation MREX
  * 
@@ -147,7 +147,7 @@ window.onload = function () {
 };
 
 /*
-Register service worker for caching to allow using the Live Viewer while not connected to the Internet (such as when connected to the CAN logger Wi-Fi).
+Register service worker for caching to allow loading the Live Viewer while not connected to the Internet (such as when connected to the CAN logger Wi-Fi).
 From https://developer.mozilla.org/en-US/docs/Web/API/Service_Worker_API/Using_Service_Workers
 */
 (async () => {
