@@ -92,6 +92,7 @@ window.onload = function () {
 			if (conn) {
 				conn.close();
 			}
+			document.getElementById("status").innerHTML = "Connection closed.";
 		}
 
 		document.getElementById("connect").onclick = function (evt) {

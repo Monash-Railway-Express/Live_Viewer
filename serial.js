@@ -11,7 +11,7 @@
  * 
  * @author Nhan Nguyen
  * 
- * @date 06/05/2026
+ * @date 07/05/2026
  * 
  * @version 2.2.0
  * 
@@ -51,6 +51,7 @@ window.onload = function () {
 		connectionContainer.appendChild(sseURL[nodeID]);
 
 		displayLog[nodeID] = document.createElement("input");
+		displayLog[nodeID].id = `display${nodeID}`;
 		displayLog[nodeID].type = "checkbox";
 		displayLog[nodeID].onchange = function (evt) {
 			log.innerText = "";
@@ -58,7 +59,8 @@ window.onload = function () {
 		};
 		connectionContainer.appendChild(displayLog[nodeID]);
 
-		connectionStati[nodeID] = document.createTextNode("");
+		connectionStati[nodeID] = document.createElement("label");
+		connectionStati[nodeID].htmlFor = `display${nodeID}`;
 		connectionContainer.appendChild(connectionStati[nodeID]);
 	}
 
@@ -119,7 +121,7 @@ window.onload = function () {
 					const messages = evt.data.split('\n');
 					for (let i = 0; i < messages.length; i++) {
 						const item = document.createElement("pre");
-						item.innerText = messages[i];
+						item.innerText = `${node_name[nodeID]}: ${messages[i]}`;
 						appendLog(item, nodeID);
 					}
 				};
@@ -129,6 +131,15 @@ window.onload = function () {
 		connect();
 
 		document.getElementById("connect").onclick = connect;
+		
+		document.getElementById("disconnect").onclick = function (evt) {
+			for (const nodeID in node_name) {
+				if (conn[nodeID]) {
+					conn[nodeID].close();
+				}
+				connectionStati[nodeID].textContent = `${node_name[nodeID]} 💀`;
+			}
+		}
 	} else {
 		const item = document.createElement("pre");
 		item.innerHTML = "<b>Your browser does not support Server-Sent Events.</b>";
