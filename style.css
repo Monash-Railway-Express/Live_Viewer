@@ -42,7 +42,8 @@ body {
 	bottom: 3em;
 	overflow: auto;
 	min-height: 10em;
-	flex: 1;
+	height: 0;
+	flex-grow: 1;
 }
 
 #connections {
