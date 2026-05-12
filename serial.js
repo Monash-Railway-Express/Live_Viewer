@@ -11,9 +11,9 @@
  * 
  * @author Nhan Nguyen
  * 
- * @date 07/05/2026
+ * @date 12/05/2026
  * 
- * @version 2.2.0
+ * @version 2.3.0
  * 
  * @organisation MREX
  * 
@@ -26,125 +26,101 @@ import sheet from "./sheet.json" with { type: "json" };
 const { node_name } = sheet;
 
 window.onload = function () {
-	const log = document.getElementById("log");
-	function resetLog() {
-		for (const { item, nodeID } of allLogs) {
-			if (displayLog[nodeID].checked) {
+	if (window.EventSource) {
+		for (const nodeID in node_name) {
+			function appendLog(item) {
+				const doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
 				log.appendChild(item);
-				if (log.childElementCount > 1000) {
+
+				while (log.childElementCount > 1000) {
 					log.removeChild(log.firstElementChild);
 				}
-			}
-		}
-	}
 
-	const sseURL = {};
-	const displayLog = {};
-	const connectionStati = {};
-	for (const nodeID in node_name) {
-		const connectionContainer = document.createElement("div");
-		document.getElementById("connections").appendChild(connectionContainer);
-
-		sseURL[nodeID] = document.createElement("input");
-		sseURL[nodeID].type = "text";
-		sseURL[nodeID].value = `http://10.0.0.${nodeID}/serial`;
-		connectionContainer.appendChild(sseURL[nodeID]);
-
-		displayLog[nodeID] = document.createElement("input");
-		displayLog[nodeID].id = `display${nodeID}`;
-		displayLog[nodeID].type = "checkbox";
-		displayLog[nodeID].onchange = function (evt) {
-			log.innerText = "";
-			resetLog();
-		};
-		connectionContainer.appendChild(displayLog[nodeID]);
-
-		connectionStati[nodeID] = document.createElement("label");
-		connectionStati[nodeID].htmlFor = `display${nodeID}`;
-		connectionContainer.appendChild(connectionStati[nodeID]);
-	}
-
-	const allLogs = [];
-	function appendLog(item, nodeID) {
-		const doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
-
-		allLogs.push({ item, nodeID });
-		if (allLogs.length > 10000) {
-			allLogs.shift();
-		}
-
-		if (displayLog[nodeID].checked) {
-			log.appendChild(item);
-			if (log.childElementCount > 1000) {
-				log.removeChild(log.firstElementChild);
-			}
-		}
-
-		if (doScroll) {
-			log.scrollTop = log.scrollHeight - log.clientHeight;
-		}
-	}
-
-	document.getElementById("autoscroll").onclick = function (evt) {
-		log.scrollTop = log.scrollHeight - log.clientHeight;
-	};
-
-	document.getElementById("clear").onclick = function (evt) {
-		allLogs.length = 0;
-		log.innerText = "";
-	};
-
-	if (window.EventSource) {		
-		document.getElementById("connect").disabled = false;
-
-		const conn = {};
-		function connect() {
-			for (const nodeID in node_name) {
-				if (conn[nodeID]) {
-					conn[nodeID].close();
+				if (doScroll) {
+					log.scrollTop = log.scrollHeight - log.clientHeight;
 				}
+			}
+			
+			const connectionContainer = document.createElement("fieldset");
+			document.getElementById("connections").appendChild(connectionContainer);
+			
+			const connectionStatus = document.createElement("legend");
+			connectionStatus.textContent = `${node_name[nodeID]} 💀`;
+			connectionContainer.appendChild(connectionStatus);
 
-				connectionStati[nodeID].textContent = `${node_name[nodeID]} ✨`;
-				conn[nodeID] = new EventSource(sseURL[nodeID].value);
+			const header = document.createElement("div");
+			connectionContainer.appendChild(header);
 
-				conn[nodeID].onopen = function (evt) {
-					connectionStati[nodeID].textContent = `${node_name[nodeID]} ⚡`;
+			let conn;
+
+			const connectButton = document.createElement("input");
+			connectButton.type = "button";
+			connectButton.value = "Connect";
+			connectButton.onclick = function (evt) {
+				if (conn) {
+					conn.close();
+				}
+				
+				connectionStatus.textContent = `${node_name[nodeID]} ✨`;
+				conn = new EventSource(sseURL.value);
+
+				conn.onopen = function (evt) {
+					connectionStatus.textContent = `${node_name[nodeID]} ⚡`;
 				};
-
-				conn[nodeID].onerror = function (evt) {
+				conn.onerror = function (evt) {
 					if (evt.target.readyState != EventSource.OPEN) {
-						connectionStati[nodeID].textContent = `${node_name[nodeID]} 💀`;
+						connectionStatus.textContent = `${node_name[nodeID]} 💀`;
 					}
 				};
-
-				conn[nodeID].onmessage = function (evt) {
+				conn.onmessage = function (evt) {
 					const messages = evt.data.split('\n');
 					for (let i = 0; i < messages.length; i++) {
 						const item = document.createElement("pre");
-						item.innerText = `${node_name[nodeID]}: ${messages[i]}`;
-						appendLog(item, nodeID);
+						item.innerText = messages[i];
+						appendLog(item);
 					}
 				};
-			}
-		}
+			};
+			header.appendChild(connectButton);
 
-		connect();
-
-		document.getElementById("connect").onclick = connect;
-		
-		document.getElementById("disconnect").onclick = function (evt) {
-			for (const nodeID in node_name) {
-				if (conn[nodeID]) {
-					conn[nodeID].close();
+			const disconnectButton = document.createElement("input");
+			disconnectButton.type = "button";
+			disconnectButton.value = "Disconnect";
+			disconnectButton.onclick = function (evt) {
+				if (conn) {
+					conn.close();
 				}
-				connectionStati[nodeID].textContent = `${node_name[nodeID]} 💀`;
-			}
+				connectionStatus.textContent = `${node_name[nodeID]} 💀`;
+			};
+			header.appendChild(disconnectButton);
+
+			const sseURL = document.createElement("input");
+			sseURL.type = "text";
+			sseURL.value = `http://10.0.0.${nodeID}/serial`;
+			header.appendChild(sseURL);
+
+			const jumpButton = document.createElement("input");
+			jumpButton.type = "button";
+			jumpButton.value = "Jump";
+			jumpButton.onclick = function (evt) {
+				log.scrollTop = log.scrollHeight - log.clientHeight;
+			};
+			header.appendChild(jumpButton);
+
+			const clearButton = document.createElement("input");
+			clearButton.type = "button";
+			clearButton.value = "Clear";
+			clearButton.onclick = function (evt) {
+				log.innerText = "";
+			};
+			header.appendChild(clearButton);
+
+			const log = document.createElement("div");
+			log.className = "log";
+			connectionContainer.appendChild(log);
 		}
 	} else {
-		const item = document.createElement("pre");
-		item.innerHTML = "<b>Your browser does not support Server-Sent Events.</b>";
-		appendLog(item);
-		document.getElementById("connect").disabled = true;
+		document.getElementById("connections").innerHTML = "<b>Your browser does not support Server-Sent Events.</b>";
 	}
 };
 

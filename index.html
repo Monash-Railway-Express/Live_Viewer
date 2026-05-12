@@ -8,9 +8,9 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
 
 @author Nhan Nguyen
 
-@date 01/05/2026
+@date 12/05/2026
 
-@version 2.1.0
+@version 2.3.0
 
 @organisation MREX
 
@@ -31,7 +31,7 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
     <body>
         <fieldset>
             <legend>Information</legend>
-            <div>Version 2.1.0</div>
+            <div>Version 2.3.0</div>
             <div>Ensure that you are on the MREx CAN Logger Wi-Fi, password YesWeCAN.</div>
         </fieldset>
         <fieldset>
@@ -47,12 +47,16 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
             &#128128; Heartbeat lost &#9889; Detecting heartbeat
             <div id="heartbeats"></div>
         </fieldset>
-        <fieldset>
-            <legend>Feed</legend>
-            <input type="button" id="autoscroll" value="Jump">
-            <input type="button" id="translate" value="Toggle translation">
-            <input type="button" id="clear" value="Clear">
-            <div id="log"></div>
-        </fieldset>
+        <div id="connections">
+            <fieldset>
+                <legend>Feed</legend>
+                <div>
+                    <input type="button" id="autoscroll" value="Jump">
+                    <input type="button" id="translate" value="Toggle translation">
+                    <input type="button" id="clear" value="Clear">
+                </div>
+                <div id="log" class="log"></div>
+            </fieldset>
+        </div>
     </body>
 </html>

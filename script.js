@@ -11,9 +11,9 @@
  * 
  * @author Nhan Nguyen
  * 
- * @date 01/05/2026
+ * @date 12/05/2026
  * 
- * @version 2.1.0
+ * @version 2.3.0
  * 
  * @organisation MREX
  * 
@@ -56,7 +56,7 @@ window.onload = function () {
 		rawLog.appendChild(item);
 		translatedLog.appendChild(translatedItem);
 
-		if (rawLog.childElementCount > 1000) {
+		while (rawLog.childElementCount > 1000) {
 			rawLog.removeChild(rawLog.firstElementChild);
 			translatedLog.removeChild(translatedLog.firstElementChild);
 		}
