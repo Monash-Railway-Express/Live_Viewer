@@ -26,7 +26,7 @@ Ensure that the URL entered in the textbox is the Server-Sent Events (Event Sour
 
 ## JSON comments
 
-sheet.json last updated 14/04/2026 from https://docs.google.com/spreadsheets/d/1OaXG5B06xnvpNkGQIkrtbM_n-pCCqvnd99yezD7YYoQ/edit?usp=sharing
+sheet.json last updated 23/05/2026 from https://docs.google.com/spreadsheets/d/1OaXG5B06xnvpNkGQIkrtbM_n-pCCqvnd99yezD7YYoQ/edit?usp=sharing
 
 sheet.object_dictionary.index.subindex.interpretation is "unsigned", "signed", "hex" or else a JSON object listing state descriptions.
 
