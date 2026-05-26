@@ -8,9 +8,9 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
 
 @author Nhan Nguyen
 
-@date 12/05/2026
+@date 23/05/2026
 
-@version 2.3.0
+@version 2.4.0
 
 @organisation MREX
 
@@ -31,7 +31,7 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
     <body>
         <fieldset>
             <legend>Information</legend>
-            <div>Version 2.3.0</div>
+            <div>Version 2.4.0</div>
             <div>Ensure that you are on the MREx CAN Logger Wi-Fi, password YesWeCAN.</div>
         </fieldset>
         <fieldset>
@@ -42,11 +42,18 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
             <span id="status">Not connected.</span>
             <span id="error"></span>
         </fieldset>
-        <fieldset>
-            <legend>CAN Heartbeat Status</legend>
-            &#128128; Heartbeat lost &#9889; Detecting heartbeat
-            <div id="heartbeats"></div>
-        </fieldset>
+        <div id="dashboard">
+            <fieldset>
+                <legend>CAN Heartbeat Status</legend>
+                <div>
+                    &#128128; Heartbeat lost &#128564; Stopped &#10024; Pre-operational &#9889; Operational
+                    <div id="heartbeats"></div>
+                </div>
+            </fieldset>
+            <fieldset id="can-data">
+                <legend>CAN Data</legend>
+            </fieldset>
+        </div>
         <div id="connections">
             <fieldset>
                 <legend>Feed</legend>

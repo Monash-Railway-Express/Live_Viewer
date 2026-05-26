@@ -11,9 +11,9 @@
  * 
  * @author Nhan Nguyen
  * 
- * @date 12/05/2026
+ * @date 23/05/2026
  * 
- * @version 2.3.0
+ * @version 2.4.0
  * 
  * @organisation MREX
  * 
@@ -25,6 +25,15 @@ import { translate_row } from "./translate_row.js";
 import sheet from "./sheet.json" with { type: "json" };
 
 const { node_name } = sheet;
+
+const highlightColour = {
+	"NMT": "purple",
+	"EMCY": "red",
+	"PDO": null,
+	"SDO Tx": "lime",
+	"SDO Rx": "yellow",
+	"Heartbeat": "pink"
+};
 
 window.onload = function () {
 	const log = document.getElementById("log");
@@ -41,12 +50,35 @@ window.onload = function () {
 		lastSeen[`${node_name[nodeID]} (${nodeID})`] = 0;
 	}
 
+	const canData = {};
+	for (const alias of [
+		"od_regen_brake",
+		"od_service_brake_dc",
+		"od_motor_command",
+		"od_true_speed",
+		"od_direction_mode",
+		"od_challenge_mode",
+		"od_horn_toggle",
+		"od_temperature_front",
+		"od_temperature_rear",
+		"od_autostop_detection",
+		"od_current",
+		"od_voltage",
+		"od_soc",
+		"od_power",
+		"od_recovered_energy"
+	]) {
+		const odContainer = document.createElement("div");
+		odContainer.appendChild(document.createTextNode(`${alias}: `));
+		canData[alias] = document.createTextNode("");
+		odContainer.appendChild(canData[alias]);
+		document.getElementById("can-data").appendChild(odContainer);
+	}
+
 	setInterval(function () {
 		for (const nodeID in node_name) {
 			if (Date.now() - lastSeen[`${node_name[nodeID]} (${nodeID})`] > 2000) {
 				heartbeatStati[nodeID].textContent = `${node_name[nodeID]} 💀`;
-			} else {
-				heartbeatStati[nodeID].textContent = `${node_name[nodeID]} ⚡`;
 			}
 		}
 	}, 2000);
@@ -125,17 +157,44 @@ window.onload = function () {
 					translatedItem.innerText = JSON.stringify(
 						translated,
 						(key, value) => {
+							if (key === "Patch") {
+								return undefined;
+							}
+							
 							if (value === undefined) {
 								return "undefined";
-							} else {
-								return value;
 							}
+							
+							return value;
 						}
 					);
-					appendLog(item, translatedItem);
+					
 					if (translated["Function"].includes("Heartbeat")) {
 						lastSeen[translated["Node"]] = Date.now();
+						const nodeID = id - 0x700;
+						switch (translated["Data"]) {
+							case "Stopped (0x2)":
+								heartbeatStati[nodeID].textContent = `${node_name[nodeID]} 😴`;
+								break;
+							case "Pre-operational (0x80)":
+								heartbeatStati[nodeID].textContent = `${node_name[nodeID]} ✨`;
+								break;
+							case "Operational (0x1)":
+								heartbeatStati[nodeID].textContent = `${node_name[nodeID]} ⚡`;
+								break;
+						}
 					}
+
+					for (const alias in translated["Patch"]) {
+						if (alias in canData) {
+							canData[alias].textContent = translated["Patch"][alias];
+						}
+					}
+
+					item.style.backgroundColor = highlightColour[translated["Function"].split(" ")[0]];
+					translatedItem.style.backgroundColor = highlightColour[translated["Function"].split(" ")[0]];
+
+					appendLog(item, translatedItem);
 				}
 			};
 		};

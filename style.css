@@ -8,9 +8,9 @@ https://arubanetworking.hpe.com/techdocs/AOS-CX/10.14/HTML/rest_v10-0x/Content/C
 
 @author Nhan Nguyen
 
-@date 12/05/2026
+@date 23/05/2026
 
-@version 2.3.0
+@version 2.4.0
 
 @organisation MREX
 
@@ -57,4 +57,18 @@ body {
 	flex-direction: column;
 	flex-grow: 1;
 	min-width: 30%;
+}
+
+#dashboard {
+	display: flex;
+}
+
+#can-data {
+	flex: 1;
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#can-data div {
+	width: 20em;
 }

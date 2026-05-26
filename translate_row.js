@@ -11,9 +11,9 @@
  * 
  * @author Nhan Nguyen
  * 
- * @date 04/04/2026
+ * @date 23/05/2026
  * 
- * @version 1.0.0
+ * @version 2.4.0
  * 
  * @organisation MREX
  * 
@@ -49,7 +49,8 @@ const {
  */
 function translate_row(timestamp, id, dlc_int, data) {
 	const translated = {
-		"Timestamp": timestamp
+		"Timestamp": timestamp,
+		"Patch": {}
 	};
 
 	const id_int = parseInt(id);
@@ -98,6 +99,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 				const meaning = interpret(data, cols, interpretation);
 				const raw = interpret(data, cols, "hex");
 				translated["Data"] += ` ${alias} (${hexify(index)}, ${hexify(subindex)}): ${meaning} (${raw}) |`;
+				translated["Patch"][alias] = meaning;
 				current_byte = upper_byte;
 			}
 		} else {
@@ -120,6 +122,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 			const meaning = interpret(data, cols, interpretation);
 			const raw = interpret(data, cols, "hex");
             translated["Data"] += `Read response (${hexify(command)}) ${meaning} (${raw})`; // assuming little-endian
+			translated["Patch"][alias] = meaning;
 		} else {
             translated["Data"] += `undefined (${hexify(command)})`;
 		}
@@ -138,6 +141,7 @@ function translate_row(timestamp, id, dlc_int, data) {
 			const meaning = interpret(data, cols, interpretation);
 			const raw = interpret(data, cols, "hex");
             translated["Data"] += `Write (${hexify(command)}) ${meaning} (${raw})`; // assuming little-endian
+			translated["Patch"][alias] = meaning;
 		} else if (command == 0x40) {
 			translated["Data"] += `Read request (${hexify(command)})`;
 		} else {
