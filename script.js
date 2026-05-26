@@ -27,7 +27,7 @@ import sheet from "./sheet.json" with { type: "json" };
 const { node_name } = sheet;
 
 const highlightColour = {
-	"NMT": "purple",
+	"NMT": "#9F5EB8",
 	"EMCY": "red",
 	"PDO": null,
 	"SDO Tx": "lime",
