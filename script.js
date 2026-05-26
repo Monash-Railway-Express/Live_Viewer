@@ -177,7 +177,7 @@ window.onload = function () {
 								heartbeatStati[nodeID].textContent = `${node_name[nodeID]} 😴`;
 								break;
 							case "Pre-operational (0x80)":
-								heartbeatStati[nodeID].textContent = `${node_name[nodeID]} ✨`;
+								heartbeatStati[nodeID].textContent = `${node_name[nodeID]} 💖`;
 								break;
 							case "Operational (0x1)":
 								heartbeatStati[nodeID].textContent = `${node_name[nodeID]} ⚡`;
