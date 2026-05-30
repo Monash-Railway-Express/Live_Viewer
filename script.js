@@ -66,7 +66,8 @@ window.onload = function () {
 		"od_voltage",
 		"od_soc",
 		"od_power",
-		"od_recovered_energy"
+		"od_recovered_energy",
+		"od_location_counter"
 	]) {
 		const odContainer = document.createElement("div");
 		odContainer.appendChild(document.createTextNode(`${alias}: `));

@@ -205,6 +205,12 @@
 				"alias": "od_recovered_energy",
 				"interpretation": "unsigned"
 			}
+		},
+		"4177": {
+			"0": {
+				"alias": "od_location_counter",
+				"interpretation": "unsigned"
+			}
 		}
 	},
 
