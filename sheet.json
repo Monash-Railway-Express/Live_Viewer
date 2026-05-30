@@ -187,19 +187,19 @@
 		"8192": {
 			"0": {
 				"alias": "od_current",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			},
 			"1": {
 				"alias": "od_voltage",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			},
 			"2": {
 				"alias": "od_soc",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			},
 			"3": {
 				"alias": "od_power",
-				"interpretation": "hex"
+				"interpretation": "unsigned"
 			},
 			"4": {
 				"alias": "od_recovered_energy",
