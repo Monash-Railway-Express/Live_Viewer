@@ -27,13 +27,11 @@ body {
 	margin: 0;
 	width: 100%;
 	height: 100%;
-	background: #9F5EB8;
 	display: flex;
 	flex-direction: column;
 }
 
 .log {
-	background: white;
 	margin: 0;
 	padding: 0.5em 0.5em 0.5em 0.5em;
 	top: 1.5em;
