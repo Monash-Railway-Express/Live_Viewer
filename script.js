@@ -27,8 +27,8 @@ import sheet from "./sheet.json" with { type: "json" };
 const { node_name } = sheet;
 
 const highlightColour = {
-	"NMT": "#9F5EB8",
-	"EMCY": "red",
+	"NMT": "lavender",
+	"EMCY": "orange",
 	"PDO": null,
 	"SDO Tx": "lime",
 	"SDO Rx": "yellow",
@@ -85,17 +85,12 @@ window.onload = function () {
 	}, 2000);
 
 	function appendLog(item, translatedItem) {
-		const doScroll = log.scrollTop === log.scrollHeight - log.clientHeight;
-		rawLog.appendChild(item);
-		translatedLog.appendChild(translatedItem);
+		rawLog.prepend(item);
+		translatedLog.prepend(translatedItem);
 
 		while (rawLog.childElementCount > 1000) {
 			rawLog.removeChild(rawLog.firstElementChild);
 			translatedLog.removeChild(translatedLog.firstElementChild);
-		}
-
-		if (doScroll) {
-			log.scrollTop = log.scrollHeight - log.clientHeight;
 		}
 	}
 
@@ -125,7 +120,9 @@ window.onload = function () {
 			if (conn) {
 				conn.close();
 			}
-			document.getElementById("status").innerHTML = "Connection closed.";
+			
+			document.getElementById("connect").disabled = false;
+			document.getElementById("status").innerHTML = "💀 Connection closed.";
 		}
 
 		document.getElementById("connect").onclick = function (evt) {
@@ -134,17 +131,17 @@ window.onload = function () {
 			}
 			
 			document.getElementById("connect").disabled = true;
-			document.getElementById("status").innerHTML = "Connecting...";
+			document.getElementById("status").innerHTML = "✨ Connecting...";
 			conn = new EventSource(document.getElementById("sseURL").value);
 
 			conn.onopen = function (evt) {
 				document.getElementById("connect").disabled = false;
-				document.getElementById("status").innerHTML = "Connection opened.";
+				document.getElementById("status").innerHTML = "⚡ Connection opened.";
 			};
 			conn.onerror = function (evt) {
 				if (evt.target.readyState != EventSource.OPEN) {
 					document.getElementById("connect").disabled = false;
-					document.getElementById("status").innerHTML = "Connection closed or failed.";
+					document.getElementById("status").innerHTML = "💀 Connection closed or failed.";
 				}
 			};
 			conn.onmessage = function (evt) {
