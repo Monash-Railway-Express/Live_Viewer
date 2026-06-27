@@ -210,6 +210,7 @@
 			"0": {
 				"alias": "od_location_counter",
 				"interpretation": {
+					"0": "reset",
 					"1": "start",
 					"4": "autostop",
 					"5": "comfort",
