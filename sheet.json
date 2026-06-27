@@ -209,7 +209,16 @@
 		"4177": {
 			"0": {
 				"alias": "od_location_counter",
-				"interpretation": "unsigned"
+				"interpretation": {
+					"1": "start",
+					"4": "autostop",
+					"5": "comfort",
+					"6": "comfort end",
+					"7": "haven",
+					"8": "traction",
+					"9": "traction end",
+					"10": "end"
+				}
 			}
 		}
 	},
