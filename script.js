@@ -13,7 +13,7 @@
  * 
  * @date 30/05/2026
  * 
- * @version 2.4.1
+ * @version 2.4.2
  * 
  * @organisation MREX
  * 
@@ -89,8 +89,8 @@ window.onload = function () {
 		translatedLog.prepend(translatedItem);
 
 		while (rawLog.childElementCount > 1000) {
-			rawLog.removeChild(rawLog.firstElementChild);
-			translatedLog.removeChild(translatedLog.firstElementChild);
+			rawLog.removeChild(rawLog.lastElementChild);
+			translatedLog.removeChild(translatedLog.lastElementChild);
 		}
 	}
 
