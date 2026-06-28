@@ -54,6 +54,7 @@ window.onload = function () {
 	for (const alias of [
 		"od_regen_brake",
 		"od_service_brake_dc",
+		"od_service_brake_mc",
 		"od_motor_command",
 		"od_true_speed",
 		"od_direction_mode",
